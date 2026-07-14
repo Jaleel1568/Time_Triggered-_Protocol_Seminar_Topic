@@ -1,0 +1,475 @@
+{
+  "protocol_version": "0.2",
+  "student_name": "Jaleel Ur Rehman",
+  "institution": "Hochschule Hamm-Lippstadt",
+  "program": "Electronics Engineering",
+  "milestone": "Seminar-Paper-TTP-Time-Triggered-Protocol",
+  "topic": "TTP: Time-Triggered Protocol for Fault-Tolerant Real-Time Systems",
+  "entries": [
+    {
+      "id": "e-t1",
+      "parent_id": null,
+      "objective": "Confirm event-triggered vs time-triggered distinction before writing Section I Introduction",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "My paper is about TTP. Before I write the intro, can you check my understanding: event-triggered protocols react to state changes and are efficient under light load but hard to bound in the worst case, while time-triggered protocols use a static TDMA schedule driven by a global clock, giving predictable timing at the cost of flexibility. Is that the right core distinction?",
+      "ai_output_summary": "Confirmed the distinction was correct. Event-triggered systems assign bandwidth dynamically based on state changes, giving low load utilization but load-dependent worst-case timing and complex schedulability analysis. Time-triggered systems use static TDMA bandwidth assignment driven by a global clock, giving load-independent worst-case timing and simpler schedulability analysis.",
+      "verification": {
+        "actions": [
+          "Compared against Section III-A Event-Triggered vs Time-Triggered Architectures in Kopetz and Grunsteidl 1993",
+          "Cross-checked against Kopetz 1991 Event-Triggered versus Time-Triggered Real-Time Systems"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section I Introduction",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Used only to confirm the core architectural distinction before writing. Final wording of the introduction is my own."
+    },
+    {
+      "id": "e-t2",
+      "parent_id": null,
+      "objective": "Clarify fail-silent nodes and Fault Tolerant Units before writing Section II-A",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "What does 'fail-silent' mean in TTP and how does an FTU relate to it? I want to make sure I explain the architectural assumptions correctly.",
+      "ai_output_summary": "Explained that a fail-silent node either produces correct output or no output at all, never incorrect output. An FTU is a set of replicated nodes where the availability of any single node implies availability of the whole unit, which is how TTP achieves node-level fault tolerance on top of the fail-silent assumption.",
+      "verification": {
+        "actions": [
+          "Checked against Section II-A Architectural Assumptions in Kopetz and Grunsteidl 1993",
+          "Verified FTU definition against same section"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-A Architectural Assumptions",
+        "usage_type": "terminology-clarification",
+        "direct_text_reused": false
+      },
+      "reflection": "Rewrote the explanation entirely in my own words. Used the AI response only to check I had the FTU/fail-silent relationship right."
+    },
+    {
+      "id": "e-t3",
+      "parent_id": null,
+      "objective": "Format failure rate data into Table I before writing Section II-B",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "I have the four failure types and their assumed rates from the paper (permanent node, permanent channel, transient node, transient channel). Can you help me lay this out as a clean table for Section II-B without changing the numbers?",
+      "ai_output_summary": "Reformatted the four failure types and their rates (10^-3, 10^-4, 10^-5, 10^-6 per hour) into a two-column table (Failure Type, Rate). No new values were introduced; the numbers came directly from the source material provided.",
+      "verification": {
+        "actions": [
+          "Checked all four rate values against Table I in Kopetz and Grunsteidl 1993",
+          "Confirmed units (per hour) matched original source"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-B Failure Model, Table I",
+        "usage_type": "formatting-reorganization",
+        "direct_text_reused": false
+      },
+      "reflection": "Table content taken directly from the original paper's failure model. AI used only for layout, not content generation."
+    },
+    {
+      "id": "e-t4",
+      "parent_id": null,
+      "objective": "Understand the four fault-tolerant configuration classes before writing Section II-C and Table II",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "Can you explain the difference between TTP's four configuration classes (I through IV)? I keep confusing how many node and channel failures each one tolerates.",
+      "ai_output_summary": "Explained that Class I tolerates zero permanent node failures and is the simplest configuration, suited to cases where cabling failures dominate. Class IV is the most robust, using two active nodes plus one shadow node per FTU and four frames per FTU, tolerating up to two permanent node failures.",
+      "verification": {
+        "actions": [
+          "Checked class definitions and tolerance values against Section II-C and Table II in Kopetz and Grunsteidl 1993",
+          "Verified frame-per-FTU counts for each class against the source"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-C System Configuration Classes, Table II",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Used to avoid mixing up the classes before writing. Final table and surrounding text written and verified against the source myself."
+    },
+    {
+      "id": "e-t5",
+      "parent_id": null,
+      "objective": "Clarify the sparse time base and TDMA granule concept before writing Section II-D",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "What is a 'basic time granule' in TTP's sparse time base, and why does using a grid instead of continuous time reduce the number of scenarios that need to be modeled?",
+      "ai_output_summary": "Explained that the sparse time base divides time into discrete granules sized according to clock synchronization accuracy, quartz precision, and channel characteristics, rather than allowing communication at arbitrary continuous instants. Restricting events to a grid reduces the state space that must be analyzed for correctness and timing.",
+      "verification": {
+        "actions": [
+          "Checked against Section II-D Sparse Time Base and TDMA Scheduling in Kopetz and Grunsteidl 1993",
+          "Verified the approximate 2-bit granule length at 250 kbit/s against the source figures"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-D Sparse Time Base and TDMA Scheduling",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Concept explanation confirmed against the source before writing. Final text expresses this in my own words."
+    },
+    {
+      "id": "e-t6",
+      "parent_id": null,
+      "objective": "Understand the three C-state fields and the CRC-based agreement mechanism before writing Section II-E",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "Can you explain the mode, time, and membership fields of the C-state, and why TTP doesn't need to send the C-state explicitly in every frame?",
+      "ai_output_summary": "Explained that the mode field identifies the current operational mode and its associated TDMA pattern, the time field marks global internal time, and the membership field is a bit vector of active/inactive FTUs. Because the CRC calculation includes the concatenated C-state along with the data, a frame is only accepted if sender and receiver already agree on C-state, so it does not need to be transmitted separately.",
+      "verification": {
+        "actions": [
+          "Checked field definitions against Section II-E Controller State (C-State) in Kopetz and Grunsteidl 1993",
+          "Verified the CRC-based implicit agreement mechanism against the same section"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-E Controller State (C-State)",
+        "usage_type": "terminology-clarification",
+        "direct_text_reused": false
+      },
+      "reflection": "Used to make sure I understood why the CRC trick avoids extra overhead before explaining it in my own words."
+    },
+    {
+      "id": "e-t7",
+      "parent_id": null,
+      "objective": "Understand the clock synchronization mechanism before writing Section II-F",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "How does TTP synchronize clocks without extra messages or larger frames, and what's the role of the fault-tolerant averaging algorithm?",
+      "ai_output_summary": "Explained that because receivers know in advance when a frame should arrive, the difference between expected and actual reception time gives a direct estimate of clock offset between sender and receiver, requiring no extra synchronization messages. The fault-tolerant averaging algorithm is then applied periodically to combine these estimates into global clock coherence.",
+      "verification": {
+        "actions": [
+          "Checked against Section II-F Clock Synchronization in Kopetz and Grunsteidl 1993",
+          "Cross-checked against Kopetz and Ochsenreiter 1987 Clock Synchronization in Distributed Real-Time Systems"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-F Clock Synchronization",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Confirmed the no-overhead synchronization mechanism before writing. Final explanation is in my own words."
+    },
+    {
+      "id": "e-t8",
+      "parent_id": null,
+      "objective": "Understand membership service and clique avoidance before writing Section II-G",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "How does the membership service detect an FTU going silent, and how does TTP avoid 'cliques' forming in the network?",
+      "ai_output_summary": "Explained that each FTU sets its own membership bit when it sends a frame, and receivers clear that bit if a correct frame isn't received in the FTU's turn. Clique formation is prevented because a receiver that discards more frames than it correctly receives in a TDMA round can detect that its own C-state has diverged from the majority.",
+      "verification": {
+        "actions": [
+          "Checked against Section II-G Membership Service in Kopetz and Grunsteidl 1993",
+          "Verified the clique-detection logic against the same section"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-G Membership Service",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Used to make sure I correctly distinguished membership bit updates from clique detection before writing the section myself."
+    },
+    {
+      "id": "e-t9",
+      "parent_id": null,
+      "objective": "Clarify mode change timing before writing Section II-H",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "How is a mode change triggered in TTP and what's the maximum delay before it takes effect?",
+      "ai_output_summary": "Explained that a mode change is signaled by placing the next mode number in the mode change subfield of the control field during the next membership cycle, and that the delay before the change takes effect is bounded by one TDMA cycle, potentially less if the requesting node has a dedicated slot for the notification.",
+      "verification": {
+        "actions": [
+          "Checked against Section II-H Mode Change in Kopetz and Grunsteidl 1993"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-H Mode Change",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Simple confirmation check before writing; final text is my own."
+    },
+    {
+      "id": "e-t10",
+      "parent_id": null,
+      "objective": "Understand redundancy management, node start-up, and shadow nodes before writing Section II-I",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "Can you walk me through what happens when a repaired node rejoins the network, and how shadow nodes work in Class IV systems?",
+      "ai_output_summary": "Explained the standardized start-up sequence: self-diagnostic test, local clock reset, listening on the bus for period I1, then either a cold start (if no traffic detected) or joining the active ensemble using the C-state carried in a received I-frame. Shadow nodes in Class IV configurations act as warm backups, taking over a node's sending slot if that slot goes unacknowledged.",
+      "verification": {
+        "actions": [
+          "Checked start-up sequence against Section II-I Redundancy Management and Initialization in Kopetz and Grunsteidl 1993",
+          "Verified shadow node behavior against the same section"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section II-I Redundancy Management and Initialization",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Used to build a clear sequential picture of node rejoin before writing. Final description written in my own words."
+    },
+    {
+      "id": "e-t11",
+      "parent_id": null,
+      "objective": "Position TTP against CAN and FlexRay before writing Section III",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "How should I frame TTP's data efficiency advantage over CAN, and where does FlexRay fit as a hybrid protocol?",
+      "ai_output_summary": "Explained that CAN's contention-based arbitration bounds latency poorly under fault conditions without an added protocol layer, while TTP achieves higher data efficiency by using a priori schedule knowledge to eliminate sender addresses, message names, and explicit acknowledgments. FlexRay was framed as a compromise, combining static (TT) and dynamic (ET) segments in one protocol.",
+      "verification": {
+        "actions": [
+          "Checked CAN comparison against Section III-B Comparison with CAN in Kopetz and Grunsteidl 1993",
+          "Checked FlexRay characterization against Section III-C and the FlexRay Consortium 2005 specification",
+          "Verified the 53.3% data efficiency figure against the source"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section III Scientific Contextualization",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Used to structure the contextualization section around three protocols. All figures and claims verified against cited references before writing."
+    },
+    {
+      "id": "e-t12",
+      "parent_id": null,
+      "objective": "Understand the source of the 53.3% data efficiency figure before writing Section IV-A",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "Where does the 53.3% data efficiency number come from, and how does it compare to the 24-27% range for other protocols?",
+      "ai_output_summary": "Explained that the efficiency gain comes from removing per-frame overhead that other protocols require (sender addresses, message names, acknowledgment frames), because TTP nodes already have a priori knowledge of the schedule and message content from the dispatcher table and C-state agreement.",
+      "verification": {
+        "actions": [
+          "Checked the 53.3% figure and the 24-27% competing range against Section IV-A Strengths in Kopetz and Grunsteidl 1993"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section IV-A Strengths",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Numbers taken directly from the source. Explanation of why the efficiency gain occurs is written in my own words."
+    },
+    {
+      "id": "e-t13",
+      "parent_id": null,
+      "objective": "Identify the main limitations to discuss in critical evaluation before writing Section IV-B",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "What are the main weaknesses of TTP I should cover in my critical evaluation section?",
+      "ai_output_summary": "Identified four main limitations: inflexibility from the fixed TDMA schedule requiring full reconfiguration for topology changes, wasted bandwidth when statically allocated slots go unused, the difficulty and cost of guaranteeing true fail-silent behavior along with TTP's inability to handle Byzantine faults, and degraded clock synchronization accuracy for large or geographically distributed ensembles.",
+      "verification": {
+        "actions": [
+          "Checked fixed-schedule and bandwidth limitations against Section IV-B Limitations and Risks in Kopetz and Grunsteidl 1993",
+          "Verified Byzantine fault exclusion against Lamport, Shostak, and Pease 1982",
+          "Confirmed clock synchronization scalability limit against Kopetz and Ochsenreiter 1987"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section IV-B Limitations and Risks",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Each limitation checked against its respective source before inclusion. Critical evaluation text written entirely in my own words."
+    },
+    {
+      "id": "e-t14",
+      "parent_id": null,
+      "objective": "Clarify which TTP assumptions may be unrealistic before writing Section IV-C",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "Which of TTP's underlying assumptions might not hold up well in modern systems, like autonomous driving?",
+      "ai_output_summary": "Identified three assumptions worth questioning: the assumption that traffic is predominantly periodic, which strains under highly variable sensor loads such as those in autonomous driving; the assumption of a stable, known-in-advance system topology, which conflicts with plug-and-play or open network requirements; and the assumption that no node fails exactly during a configuration change, which cannot be guaranteed under an asynchronous fault model.",
+      "verification": {
+        "actions": [
+          "Checked periodic-workload assumption against Section IV-C and Kopetz 1991",
+          "Verified topology assumption against Section IV-C in Kopetz and Grunsteidl 1993",
+          "Cross-checked the asynchronous fault timing assumption against Lamport, Shostak, and Pease 1982"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section IV-C Assumptions That May Be Unrealistic",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Used the autonomous driving example as a concrete modern illustration of the periodic-traffic assumption breaking down. All three assumptions verified against sources before writing."
+    },
+    {
+      "id": "e-t15",
+      "parent_id": null,
+      "objective": "Determine suitable and unsuitable application domains before writing Section V",
+      "ai_tool": {
+        "name": "Claude",
+        "model": "Claude Sonnet 4.6"
+      },
+      "prompt": "Where is TTP a good fit and where is it a poor fit among modern embedded and automotive systems?",
+      "ai_output_summary": "Suitable domains identified: safety-critical control with hard timing guarantees such as brake-by-wire, steer-by-wire, flight control, and railway signalling, plus predictable periodic sensing and control loops such as engine control. Poor fits identified: infotainment systems, over-the-air firmware updates, and camera or LiDAR feeds with inconsistent bandwidth needs, plus industrial IoT networks with frequent node churn and low-cost body electronics better served by CAN's simplicity.",
+      "verification": {
+        "actions": [
+          "Checked suitability claims against Section V Application Discussion in Kopetz and Grunsteidl 1993",
+          "Verified the CAN-suitability comparison for body electronics against Section III-B"
+        ],
+        "level": "primary-source-check"
+      },
+      "evaluation": {
+        "status": "accepted",
+        "issues": [],
+        "usefulness": "high"
+      },
+      "integration": {
+        "used_in_work": true,
+        "section": "Section V Application Discussion",
+        "usage_type": "understanding-confirmation",
+        "direct_text_reused": false
+      },
+      "reflection": "Application discussion written entirely in my own words, using the AI response only to make sure the suitable/unsuitable split was grounded in the source rather than assumed."
+    }
+  ],
+  "summary": {
+    "total_entries": 15,
+    "tools_used": [
+      "Claude Sonnet 4.6"
+    ],
+    "usage_types": [
+      "understanding-confirmation",
+      "terminology-clarification",
+      "formatting-reorganization"
+    ],
+    "direct_text_reused": false,
+    "all_verified_against_primary_source": true,
+    "primary_source": "H. Kopetz and G. Grunsteidl, \"TTP: A Time-Triggered Protocol for Fault-Tolerant Real-Time Systems,\" in Proc. 23rd Int. Symp. on Fault-Tolerant Computing (FTCS-23), pp. 524-533, Toulouse, France, June 1993."
+  }
+}
